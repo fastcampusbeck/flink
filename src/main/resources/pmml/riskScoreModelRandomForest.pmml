@@ -1,0 +1,53 @@
+<PMML version="4.2" xmlns="http://www.dmg.org/PMML-4_2">
+    <Header>
+        <Application name="Risk Score Predictor" version="1.0"/>
+    </Header>
+    <DataDictionary numberOfFields="2">
+        <DataField name="volume" optype="continuous" dataType="integer"/>
+        <DataField name="riskScore" optype="continuous" dataType="double"/>
+    </DataDictionary>
+    <MiningModel modelName="randomForestModel" functionName="regression">
+        <MiningSchema>
+            <MiningField name="volume"/>
+            <MiningField name="riskScore" usageType="predicted"/>
+        </MiningSchema>
+        <Segmentation multipleModelMethod="average">
+            <Segment id="1">
+                <True/>
+                <TreeModel modelName="TreeModel1" functionName="regression" splitCharacteristic="binarySplit">
+                    <MiningSchema>
+                        <MiningField name="volume"/>
+                        <MiningField name="riskScore" usageType="predicted"/>
+                    </MiningSchema>
+                    <Node id="1" score="0.3">
+                        <SimplePredicate field="volume" operator="lessOrEqual" value="1000"/>
+                        <Node id="2" score="0.4">
+                            <SimplePredicate field="volume" operator="lessOrEqual" value="250"/>
+                        </Node>
+                        <Node id="3" score="0.6">
+                            <SimplePredicate field="volume" operator="greaterThan" value="250"/>
+                        </Node>
+                    </Node>
+                </TreeModel>
+            </Segment>
+            <Segment id="2">
+                <True/>
+                <TreeModel modelName="TreeModel2" functionName="regression" splitCharacteristic="binarySplit">
+                    <MiningSchema>
+                        <MiningField name="volume"/>
+                        <MiningField name="riskScore" usageType="predicted"/>
+                    </MiningSchema>
+                    <Node id="1" score="0.7">
+                        <SimplePredicate field="volume" operator="lessOrEqual" value="1000"/>
+                        <Node id="2" score="0.1">
+                            <SimplePredicate field="volume" operator="lessOrEqual" value="750"/>
+                        </Node>
+                        <Node id="3" score="0.9">
+                            <SimplePredicate field="volume" operator="greaterThan" value="750"/>
+                        </Node>
+                    </Node>
+                </TreeModel>
+            </Segment>
+        </Segmentation>
+    </MiningModel>
+</PMML>
