@@ -33,7 +33,12 @@ public class WithdrawalWithinSpecificTime {
                 .where(new IterativeCondition<TransactionEvent>() {
                     @Override
                     public boolean filter(TransactionEvent second, Context<TransactionEvent> ctx) throws Exception {
-                        return true;
+                        for (TransactionEvent first: ctx.getEventsForPattern("firstWithdrawal")) {
+                            if (first.getUserId().equals(second.getUserId()) && second.getAmount() <= 2000) {
+                                return true;
+                            }
+                        }
+                        return false;
                     }
                 })
                 .within(Time.seconds(10));

@@ -2,7 +2,6 @@ package com.fastcampus.streaming.flinkcourse.chapter5.individual;
 
 import com.fastcampus.streaming.flinkcourse.chapter5.source.TransactionEventSource;
 import com.fastcampus.streaming.flinkcourse.model.cep.TransactionEvent;
-import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.cep.CEP;
 import org.apache.flink.cep.PatternStream;
 import org.apache.flink.cep.functions.PatternProcessFunction;
