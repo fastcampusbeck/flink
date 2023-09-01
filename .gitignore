@@ -67,3 +67,6 @@ buildNumber.properties
 # OS-specific files
 .DS_Store
 Thumbs.db
+
+# Config
+main/resources/config.properties
