@@ -10,12 +10,13 @@ import org.apache.flink.types.Row;
 import org.apache.flink.util.Collector;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class NewsDataStateStoringFunction extends RichFlatMapFunction<Row, List<Row>> {
 
     private transient ListState<Row> newsDataState;
-    private static final int MAX_SIZE = 1000;
+    private static final int MAX_SIZE = 10000;
 
     @Override
     public void open(Configuration parameters) throws Exception {

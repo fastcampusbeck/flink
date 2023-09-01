@@ -60,14 +60,15 @@ public class NewsClustering {
 
         Table predictedTable = model.transform(storedDataTable)[0];
         DataStream<Row> predictedStream = tEnv.toDataStream(predictedTable);
-        DataStream<Tuple4<DenseVector, String, Long, Integer>> tuple3Stream = predictedStream.map(new RowToTuple4Function());
 
-        DataStream<Tuple5<DenseVector, String, Long, Integer, Integer>> avgVectorStream = tuple3Stream
+        DataStream<Tuple4<DenseVector, String, Long, Integer>> tuple4Stream = predictedStream.map(new RowToTuple4Function());
+
+        DataStream<Tuple5<DenseVector, String, Long, Integer, Integer>> avgVectorStream = tuple4Stream
                 .map(new Tuple4ToTuple5Function())
                 .keyBy(tuple -> tuple.f3)
                 .reduce(new CombineVectorsFunction());
 
-        DataStream<String> representativeNewsStream = tuple3Stream
+        DataStream<String> representativeNewsStream = tuple4Stream
                 .keyBy(tuple -> tuple.f3)
                 .connect(avgVectorStream.keyBy(tuple -> tuple.f3))
                 .process(new RepresentativeNewsFunction());
