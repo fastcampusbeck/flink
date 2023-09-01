@@ -69,4 +69,4 @@ buildNumber.properties
 Thumbs.db
 
 # Config
-main/resources/config.properties
+src/main/resources/config.properties
