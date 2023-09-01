@@ -30,20 +30,16 @@ public class NewsDataStateStoringFunction extends RichFlatMapFunction<Row, List<
     public void flatMap(Row value, Collector<List<Row>> out) throws Exception {
         List<Row> storedNewsData = new ArrayList<>();
 
-        // Add the new value
         newsDataState.add(value);
 
-        // Retrieve all stored news data
         for (Row data : newsDataState.get()) {
             storedNewsData.add(data);
         }
 
-        // If the size exceeds the maximum, remove the oldest ones
         while (storedNewsData.size() > MAX_SIZE) {
             storedNewsData.remove(0);
         }
 
-        // Update the state with the pruned list
         newsDataState.clear();
         for (Row data : storedNewsData) {
             newsDataState.add(data);

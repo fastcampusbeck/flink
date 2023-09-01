@@ -28,7 +28,7 @@ public class NewsApiSource extends RichSourceFunction<News> {
 
     @Override
     public void run(SourceFunction.SourceContext<News> ctx) throws Exception {
-        while (!isCanceled) {  // Check if the source has been canceled
+        while (!isCanceled) {
 
             this.pageNo += 1;
 
